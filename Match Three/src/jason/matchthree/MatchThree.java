@@ -2,8 +2,11 @@ package jason.matchthree;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -16,6 +19,7 @@ public class MatchThree extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private ScorePanel scorePanel = new ScorePanel(0, Color.GREEN);
+	private BallPanel ballPanel = new BallPanel(this);
 	
 	public MatchThree() {
 		initGUI();
@@ -41,9 +45,33 @@ public class MatchThree extends JFrame {
 		mainPanel.add(scorePanel);
 
 		// ball panel
-		
+		mainPanel.add(ballPanel);
 		
 		// button panel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(Color.BLACK);
+		mainPanel.add(buttonPanel);
+		
+		JButton hintButton = new JButton("Hint");
+		hintButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showHint();
+			}
+		});
+		buttonPanel.add(hintButton);
+	}
+	
+	public void addToScore(int newPoints) {
+		scorePanel.addToScore(newPoints);
+	}
+	
+	public void restart() {
+		scorePanel.reset();
+		ballPanel.setInitialBalls();
+	}
+	
+	public void showHint() {
+		ballPanel.showHint();
 	}
 
 	public static void main(String[] args) {
